@@ -147,7 +147,10 @@ def run_ar_patch(img_dict: dict, directory: str) -> None:
     for key, images in img_dict.items():
         # images
         img_raw_path = os.path.join(directory, images["raw"])
-        img_ar_path = os.path.join(directory, images["full_virtual_mask"])
+        if "full_virtual_mask" in images:
+            img_ar_path = os.path.join(directory, images["full_virtual_mask"])
+        else:
+            img_ar_path = os.path.join(directory, images["piece_virtual_mask"])
         # box
         bounding_box = get_bounding_box(img_ar_path, tolerance=10)
         # patches
@@ -165,7 +168,7 @@ def verify_img_dict(img_dict):
     for k, v in img_dict.items():
         if len(v.values()) < 4:
             warnings.warn(f"{k} missing an input img type, removing key")
-            del img_dict[k]
+            # del img_dict[k]
 
 
 if __name__ == '__main__':
