@@ -14,11 +14,11 @@ import warnings
 def load_img_dict(path: str) -> dict:
     """Maps id to filename types for both formats."""
     img_dict = {}
-    pattern1 = re.compile(r"^(.*?)_(\d+?)_(.*?)\.png$")
+    pattern1 = re.compile(r"^(.*?)_(\d+?)_(.*?)\.(jpg|jpeg|png)$")
     for filename in os.listdir(path):
         match1 = pattern1.match(filename)
         if match1:
-            img, num, type = match1.groups()
+            img, num, type, _ = match1.groups()
             key = f"{img}_{num}"
             if key not in img_dict:
                 img_dict[key] = defaultdict(lambda: None)
