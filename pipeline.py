@@ -148,11 +148,12 @@ def run_ar_patch(img_dict: dict, directory: str) -> None:
         # images
         img_raw_path = os.path.join(directory, images["raw"])
         if "full_virtual_mask" in images:
-            img_ar_path = os.path.join(directory, images["full_virtual_mask"])
+            img_mask_path = os.path.join(directory, images["full_virtual_mask"])
         else:
-            img_ar_path = os.path.join(directory, images["piece_virtual_mask"])
+            img_mask_path = os.path.join(directory, images["piece_virtual_mask"])
+        img_ar_path = os.path.join(directory, images["ar"])
         # box
-        bounding_box = get_bounding_box(img_ar_path, tolerance=10)
+        bounding_box = get_bounding_box(img_mask_path, tolerance=10)
         # patches
         patch_raw = crop_bounding_box(img_raw_path, bounding_box)
         patch_ar = crop_bounding_box(img_ar_path, bounding_box)
