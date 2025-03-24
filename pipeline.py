@@ -153,7 +153,13 @@ def run_ar_patch(img_dict: dict, directory: str) -> None:
             img_mask_path = os.path.join(directory, images["piece_virtual_mask"])
         img_ar_path = os.path.join(directory, images["ar"])
         # box
-        bounding_box = get_bounding_box(img_mask_path, tolerance=10)
+        try:
+            bounding_box = get_bounding_box(img_mask_path, tolerance=10)
+        except Exception as e:
+            bounding_box = None
+            warnings.warn(f"Bounding box failed: {img_mask_path}")
+        if bounding_box is None:
+            continue
         # patches
         patch_raw = crop_bounding_box(img_raw_path, bounding_box)
         patch_ar = crop_bounding_box(img_ar_path, bounding_box)
